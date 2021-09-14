@@ -1,10 +1,12 @@
 package com.bridgelabz.addressbook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
-	private ArrayList<Contact> addressBook = new ArrayList<Contact>();
+	private HashMap<String,Contact> addressBook = new HashMap<String,Contact>();
+
 	public void addContact() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter contact details");
@@ -23,7 +25,7 @@ public class AddressBook {
 		System.out.println("Enter email");
 		String email = sc.nextLine();
 		
-		addressBook.add(new Contact(firstName,lastName,city,state,zip,phoneNumber,email));
+		addressBook.put(firstName,new Contact(firstName,lastName,city,state,zip,phoneNumber,email));
 		sc.close();
 	}
 }

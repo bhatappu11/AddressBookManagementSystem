@@ -28,6 +28,11 @@ public class AddressBook {
 			System.out.println(c.getFirstName()+" : "+stateName);
 		});
 	}
+	public void sortContacts() {
+		contacts.stream().sorted((c1,c2) -> c1.compareTo(c2)).peek(c -> {
+			System.out.println(c.getFirstName());
+		});
+	}
 	
 
 	public void editContact() {

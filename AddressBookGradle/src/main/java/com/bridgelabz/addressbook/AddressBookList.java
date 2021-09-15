@@ -52,4 +52,10 @@ public class AddressBookList {
 			System.out.println();
 		}
 	}
+	public void sortContacts() {
+		
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.sortContacts();
+		}
+	}
 }

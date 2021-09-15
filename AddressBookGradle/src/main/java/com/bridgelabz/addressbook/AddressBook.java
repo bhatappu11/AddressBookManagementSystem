@@ -57,8 +57,13 @@ public class AddressBook {
 	public void deleteContact() {
 		System.out.println("Enter the first name of the contact to delete");
 		String firstName = sc.next();
-		addressBook.remove(firstName.toLowerCase());
-		System.out.println("Contact is deleted");
+		boolean isNamePresent = addressBook.containsKey(firstName);
+		if(isNamePresent == true) {
+			addressBook.remove(firstName.toLowerCase());
+			System.out.println("Contact is deleted");
+		}
+		else
+			System.err.println("Entered first name not present");
 	}
 	
 	public void addContact() {

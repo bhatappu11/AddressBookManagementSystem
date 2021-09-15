@@ -15,6 +15,17 @@ public class AddressBookList {
 	public AddressBook get(String book) {
 		return addressBooks.get(book);
 	}
+	public void searchAcrossByCity(String city) {
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.findContactInCity(city);
+		}
+	}
+	
+	public void searchAcrossByState(String state) {
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.findContactInState(state);
+		}
+	}
 	public static void addressMenu(AddressBook addressBook) {
 		Scanner sc = new Scanner(System.in);
 		int option = 0;

@@ -14,6 +14,17 @@ public class AddressBook {
 		this.contacts = new LinkedList<Contact>();
 		this.numOfContacts = 0;
 	}
+	public void findContactInCity(String cityName) {
+		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
+			System.out.println(c.getFirstName()+" : "+cityName);
+		});
+	}
+	public void findContactInState(String stateName) {
+		contacts.stream().filter(c -> c.getState().equals(stateName)).peek(c -> {
+			System.out.println(c.getFirstName()+" : "+stateName);
+		});
+	}
+	
 
 	public void editContact() {
 		System.out.println("Enter first name of person you want edit:");

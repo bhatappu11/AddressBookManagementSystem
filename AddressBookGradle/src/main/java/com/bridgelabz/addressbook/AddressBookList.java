@@ -66,10 +66,24 @@ public class AddressBookList {
 			System.out.println();
 		}
 	}
-	public void sortContacts() {
-		
+	public void sortByName() {		
 		for(AddressBook addressBook : addressBooks.values()) {
-			addressBook.sortContacts();
+			addressBook.sortByName();
+		}
+	}
+	public void sortByZip() {		
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.sortByZip();
+		}
+	}
+	public void sortByCity() {		
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.sortByCity();
+		}
+	}
+	public void sortByState() {		
+		for(AddressBook addressBook : addressBooks.values()) {
+			addressBook.sortByName();
 		}
 	}
 }

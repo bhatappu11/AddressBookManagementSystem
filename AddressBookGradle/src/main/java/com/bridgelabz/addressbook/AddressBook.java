@@ -28,10 +28,25 @@ public class AddressBook {
 			System.out.println(c.getFirstName()+" : "+stateName);
 		});
 	}
-	public void sortContacts() {
+	public void sortByName() {
 		contacts.stream().sorted((c1,c2) -> c1.compareTo(c2)).peek(c -> {
 			System.out.println(c.getFirstName());
 		});
+	}
+	public  void sortByZip() {
+		contacts.stream()
+					 .sorted((contact1,contact2) -> contact1.getZip().compareTo(contact2.getZip()))
+					 .forEach(System.out::println);
+	}
+	public  void sortByCity() {
+		contacts.stream()
+					 .sorted((contact1,contact2) -> contact1.getCity().compareTo(contact2.getCity()))
+					 .forEach(System.out::println);
+	}
+	public  void sortByState() {
+		contacts.stream()
+					 .sorted((contact1,contact2) -> contact1.getState().compareTo(contact2.getState()))
+					 .forEach(System.out::println);
 	}
 	
 

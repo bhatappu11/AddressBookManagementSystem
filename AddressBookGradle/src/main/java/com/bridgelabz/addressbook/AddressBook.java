@@ -5,65 +5,73 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
-	private HashMap<String,Contact> addressBook = new HashMap<String,Contact>();
-	Scanner sc=new Scanner(System.in);
+	private Contact[] contacts = new Contact[20];
+	Scanner sc = new Scanner(System.in);
+	private int numOfContacts = 0;
+	
 	public void editContact() {
-		System.out.println("Enter the first name of the contact to edit");
-		String firstName = sc.nextLine();
-		Contact contact = addressBook.get(firstName.toLowerCase());
-		System.out.println("Select the options \t 1.first name \t 2.last name \t 3.city \n 4.state \t 5.zip \t 6.phone number \t 7.email");
+		System.out.println("Enter the phone number of the contact to edit");
+		String phoneNum = sc.next();
+		Contact contactToChange = null;
+		for(Contact contact : contacts) {
+			if(contact.getPhoneNumber().contentEquals(phoneNum)) {
+				contactToChange = contact;
+				break;
+			}
+		}System.out.println("Select the options \t 1.first name \t 2.last name \t 3.city \n 4.state \t 5.zip \t 6.phone number \t 7.email");
 		int option = sc.nextInt();
 		switch(option) {
 		case 1:
 			System.out.println("enter new first name");
 			String newFirstName = sc.next();
-			addressBook.remove(firstName);
-			contact.setFirstName(newFirstName);
-			addressBook.put(newFirstName, contact);
+			contactToChange.setFirstName(newFirstName);
 			break;
 		case 2:
 			System.out.println("Enter new last name");
 			String newLastName=sc.next();
-			contact.setLastName(newLastName);
+			contactToChange.setLastName(newLastName);
 			break;
 		case 3:
 			System.out.println("Enter new city");
-			contact.setCity(sc.next());
+			contactToChange.setCity(sc.next());
 			break;
 		case 4:
 			System.out.println("Enter new state");
-			contact.setState(sc.next());
+			contactToChange.setState(sc.next());
 			break;
 		case 5:
 			System.out.println("Enter new zip");
-			contact.setZip(sc.next());
+			contactToChange.setZip(sc.next());
 			break;
 		case 6:
 			System.out.println("Enter new phone number");
-			contact.setPhoneNumber(sc.next());
+			contactToChange.setPhoneNumber(sc.next());
 			break;
 		case 7:
 			System.out.println("Enter new email");
-			contact.setEmail(sc.next());
+			contactToChange.setEmail(sc.next());
 			break;
 		default:
 			System.err.println("Invalid Option");
 			
 		}
 		System.out.println("Editing done, the new details are: ");
-		System.out.println(contact.getFirstName()+" "+contact.getLastName()+" "+contact.getCity()+" "+contact.getState()+" "+contact.getZip()+" "+contact.getPhoneNumber()+" "+contact.getEmail());
+		System.out.println(contactToChange.getFirstName()+" "+contactToChange.getLastName()+" "+contactToChange.getCity()+" "+contactToChange.getState()+" "+contactToChange.getZip()+" "+contactToChange.getPhoneNumber()+" "+contactToChange.getEmail());
 		
 	}
 	public void deleteContact() {
-		System.out.println("Enter the first name of the contact to delete");
-		String firstName = sc.next();
-		boolean isNamePresent = addressBook.containsKey(firstName);
-		if(isNamePresent == true) {
-			addressBook.remove(firstName.toLowerCase());
-			System.out.println("Contact is deleted");
+		System.out.println("Enter the phone num of the contact to delete");
+		String phone = sc.next();
+		int index = 0;
+		for(Contact contact: contacts) {
+			index++;
+			if(contact.getPhoneNumber().equals(phone))
+				break;
 		}
-		else
-			System.err.println("Entered first name not present");
+		for(;index < numOfContacts-1;index++) {
+			contacts[index] = contacts[index+1];
+		}
+		System.out.println("contact deleted");
 	}
 	
 	public void addContact() {
@@ -83,7 +91,7 @@ public class AddressBook {
 		System.out.println("Enter email");
 		String email = sc.nextLine();
 		
-		addressBook.put(firstName,new Contact(firstName,lastName,city,state,zip,phoneNumber,email));
-		sc.close();
+		contacts[numOfContacts] = new Contact(firstName,lastName,city,state,zip,phoneNumber,email);
+		numOfContacts++;
 	}
 }

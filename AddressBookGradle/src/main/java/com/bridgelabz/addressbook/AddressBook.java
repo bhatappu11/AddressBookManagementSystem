@@ -1,23 +1,24 @@
 package com.bridgelabz.addressbook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.*;
 
 public class AddressBook {
-	private HashMap<String, Contact> contacts;
+	private List<Contact> contacts;
 	Scanner sc = new Scanner(System.in);
 	private int numOfContacts = 0;
 	
 	public AddressBook() {
-		this.contacts = new HashMap<String, Contact>();
+		this.contacts = new LinkedList<Contact>();
 		this.numOfContacts = 0;
 	}
 
 	public void editContact() {
-		System.out.println("Enter the first name of the contact to edit");
+		System.out.println("Enter first name of person you want edit:");
 		String firstName = sc.next();
-		Contact contactToChange = contacts.get(firstName);
+		Contact contactToChange = contacts.stream().filter(c -> c.getFirstName().equals(firstName)).findFirst().orElse(null);
 		if(contactToChange == null) {
 			System.out.println("contact does not exist");
 			return;
@@ -64,32 +65,45 @@ public class AddressBook {
 		
 	}
 	public void deleteContact() {
-
-		System.out.println("Enter phone number of person you want to delete:");
-		String phone = sc.nextLine();
-		contacts.remove(phone);
-		System.out.println("Contact deleted");
+		System.out.println("Enter first name number of person you want to delete:");
+		String firstName = sc.next();
+		for(int i=0;i<contacts.size();i++) {
+			if(contacts.get(i).getFirstName().equals(firstName)) {
+				contacts.remove(i);
+				System.out.println("Successfully Deleted");
+				return;
+			}
+		}
 	}
 	
 	public void addContact() {
 		System.out.println("Enter contact details");
 		System.out.println("Enter first name");
-		String firstName = sc.nextLine();
+		String firstName = sc.next();
 		System.out.println("Enter last name");
-		String lastName = sc.nextLine();
+		String lastName = sc.next();
 		System.out.println("Enter city");
-		String city = sc.nextLine();
+		String city = sc.next();
 		System.out.println("Enter state");
-		String state = sc.nextLine();
+		String state = sc.next();
 		System.out.println("Enter zip");
-		String zip = sc.nextLine();
+		String zip = sc.next();
 		System.out.println("Enter phone number");
-		String phoneNumber = sc.nextLine();
+		String phoneNumber = sc.next();
 		System.out.println("Enter email");
-		String email = sc.nextLine();
-		
-		Contact contact = new Contact(firstName,lastName,city,state,zip,phoneNumber,email);
-		contacts.put(firstName, contact);
-		numOfContacts++;
+		String email = sc.next();
+		Contact contact = new Contact(firstName, lastName, city, state, zip, phoneNumber, email);
+		if(!checkIfContactExists(contact)) {
+			contacts.add(contact);
+		}
+		else {
+			System.out.println("Duplicate");
+		}
 	}
+	
+	private boolean checkIfContactExists(Contact contact) {
+		return contacts.stream().filter(c -> c.equals(contact)).findFirst().orElse(null) != null;
+	}
+
+
 }

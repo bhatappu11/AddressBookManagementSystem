@@ -5,20 +5,24 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
-	private Contact[] contacts = new Contact[20];
+	private HashMap<String, Contact> contacts;
 	Scanner sc = new Scanner(System.in);
 	private int numOfContacts = 0;
 	
+	public AddressBook() {
+		this.contacts = new HashMap<String, Contact>();
+		this.numOfContacts = 0;
+	}
+
 	public void editContact() {
-		System.out.println("Enter the phone number of the contact to edit");
-		String phoneNum = sc.next();
-		Contact contactToChange = null;
-		for(Contact contact : contacts) {
-			if(contact.getPhoneNumber().contentEquals(phoneNum)) {
-				contactToChange = contact;
-				break;
-			}
-		}System.out.println("Select the options \t 1.first name \t 2.last name \t 3.city \n 4.state \t 5.zip \t 6.phone number \t 7.email");
+		System.out.println("Enter the first name of the contact to edit");
+		String firstName = sc.next();
+		Contact contactToChange = contacts.get(firstName);
+		if(contactToChange == null) {
+			System.out.println("contact does not exist");
+			return;
+		}
+		System.out.println("Select the options \t 1.first name \t 2.last name \t 3.city \n 4.state \t 5.zip \t 6.phone number \t 7.email");
 		int option = sc.nextInt();
 		switch(option) {
 		case 1:
@@ -60,18 +64,11 @@ public class AddressBook {
 		
 	}
 	public void deleteContact() {
-		System.out.println("Enter the phone num of the contact to delete");
-		String phone = sc.next();
-		int index = 0;
-		for(Contact contact: contacts) {
-			index++;
-			if(contact.getPhoneNumber().equals(phone))
-				break;
-		}
-		for(;index < numOfContacts-1;index++) {
-			contacts[index] = contacts[index+1];
-		}
-		System.out.println("contact deleted");
+
+		System.out.println("Enter phone number of person you want to delete:");
+		String phone = sc.nextLine();
+		contacts.remove(phone);
+		System.out.println("Contact deleted");
 	}
 	
 	public void addContact() {
@@ -91,7 +88,8 @@ public class AddressBook {
 		System.out.println("Enter email");
 		String email = sc.nextLine();
 		
-		contacts[numOfContacts] = new Contact(firstName,lastName,city,state,zip,phoneNumber,email);
+		Contact contact = new Contact(firstName,lastName,city,state,zip,phoneNumber,email);
+		contacts.put(firstName, contact);
 		numOfContacts++;
 	}
 }

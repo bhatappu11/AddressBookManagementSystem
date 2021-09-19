@@ -57,16 +57,15 @@ public class AddressBookMain {
 				System.out.println("Options 1.by name 2. by zip 3.by city 4.by state");
 				int ch=sc.nextInt();
 				if(ch==1)
-					addressBookList.sortByName();
-				if(ch==2)
+					addressBookList.sortByName(); 
+				else if(ch==2)
 					addressBookList.sortByZip();
-				if(ch==3)
-					addressBookList.sortByCity();
-				if(ch==4)
+				else if(ch==3)
+					addressBookList.sortByCity(); 
+				else if(ch==4)
 					addressBookList.sortByState();
 				else
-					System.out.println("Invalid choice");
-
+					System.out.println("Invalid choice"); 
 				break;
 			default:
 				exit1 = false;

@@ -3,6 +3,7 @@ package com.bridgelabz.addressbook;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.*;
 
 public class AddressBook {
@@ -29,9 +30,11 @@ public class AddressBook {
 		});
 	}
 	public void sortByName() {
-		contacts.stream().sorted((c1,c2) -> c1.compareTo(c2)).peek(c -> {
-			System.out.println(c.getFirstName());
-		});
+		contacts.stream()
+		 .sorted((contact1,contact2) -> contact1.getFirstName().compareTo(contact2.getFirstName()))
+		 .forEach(n->{
+				System.out.println(n.getFirstName());
+			});
 	}
 	public  void sortByZip() {
 		contacts.stream()
@@ -147,7 +150,7 @@ public class AddressBook {
 	}
 	
 	private boolean checkIfContactExists(Contact contact) {
-		return contacts.stream().filter(c -> c.equals(contact)).findFirst().orElse(null) != null;
+		return contacts.stream().filter(c -> c.getFirstName().equals(contact.getFirstName())).findFirst().orElse(null) != null;
 	}
 	public void printCountByCity() {
 		contactsByCity.keySet().stream().peek(c -> {

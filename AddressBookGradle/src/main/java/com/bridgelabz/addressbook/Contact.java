@@ -79,5 +79,11 @@ public class Contact implements Comparable<Contact>{
 	public int compareTo(Contact c) {
 		return this.firstName.compareTo(c.getFirstName());
 	}
+
+	@Override
+	public String toString() {
+		return "Contact [firstName=" + firstName + ", lastName=" + lastName + ", city=" + city + ", state=" + state
+				+ ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+	}
 	
 }

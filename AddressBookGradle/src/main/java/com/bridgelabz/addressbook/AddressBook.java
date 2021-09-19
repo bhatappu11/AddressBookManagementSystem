@@ -4,9 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class AddressBook {
+	public static String FILE_NAME = "address-book-data.txt";
 	private List<Contact> contacts;
 	private HashMap<String, LinkedList<Contact>> contactsByCity;
 	private HashMap<String, LinkedList<Contact>> contactsByState;
@@ -19,6 +23,33 @@ public class AddressBook {
 		this.contactsByState = new HashMap<>();
 		this.numOfContacts = 0;
 	}
+	public void writeDataToFile() {
+		System.out.print("Writing AddressBook data to a file ");
+		StringBuffer writeBuffer = new StringBuffer();
+		contacts.forEach(contact -> {
+			String contactDetails = contact.toString().concat("\n");
+			writeBuffer.append(contactDetails);
+		});
+		
+		try {
+			Files.write(Paths.get(FILE_NAME),writeBuffer.toString().getBytes());
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void readDataFromFile() {
+		System.out.println("Reading AddressBook data from the file");
+		try {
+			Files.lines(Paths.get(FILE_NAME))
+				 .map(contact -> contact.trim())
+				 .forEach(contact -> System.out.println(contact));
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void findContactInCity(String cityName) {
 		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
 			System.out.println(c.getFirstName()+" : "+cityName);
@@ -162,6 +193,10 @@ public class AddressBook {
 			System.out.println(s+" : "+contactsByState.get(s).stream().count());
 		});			
 	}
+	@Override
+	public String toString() {
+		return "AddressBook [contacts=" + contacts + "]";
+	}
 
-
+	
 }

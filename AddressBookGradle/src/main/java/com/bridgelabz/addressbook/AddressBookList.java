@@ -52,7 +52,7 @@ public class AddressBookList {
 			option  = sc.nextInt();
 			switch(option) {
 			case 1 :
-				addressBook.addContact();
+				addressBook.createContact(sc);
 				break;
 			case 2 :
 				System.out.println("Enter the details to edit");
@@ -63,14 +63,22 @@ public class AddressBookList {
 				addressBook.deleteContact();
 				break;
 			case 4:
-				System.out.println("Enter \n1.To console\n2.To file");
-				if(sc.nextInt()==1)
+				System.out.println("Enter \n1.To console\n2.To text file 3.To CSV file");
+				int choice = sc.nextInt();
+				if(choice==1)
 					addressBook.writeDataToFile(IOService.CONSOLE_IO);
-				else
+				else if(choice==2)
 					addressBook.writeDataToFile(IOService.FILE_IO);
+				else
+					addressBook.writeDataToCsvFile(IOService.FILE_IO);
 				break;
 			case 5:
-				addressBook.readDataFromFile();
+				System.out.println("Enter 1.from text file 2.from csv file");
+				int opt=sc.nextInt();
+				if(opt==1)
+					addressBook.readDataFromFile();
+				else
+					addressBook.readDataFromCsvFile();
 				break;
 			default:
 				exit = false;

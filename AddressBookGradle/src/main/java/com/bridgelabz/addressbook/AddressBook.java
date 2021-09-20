@@ -36,6 +36,18 @@ public class AddressBook {
 	public void readDataFromFile() {
 		new AddressBookIOService().printData();
 	}
+	
+	public void writeDataToCsvFile(IOService ioService) {
+		if(ioService.equals(IOService.CONSOLE_IO))
+			System.out.println("\nWriting  AddressBook to  Console\n" + contacts);
+		
+		else if(ioService.equals(IOService.FILE_IO))
+			new AddressBookIOService().writeDataToCsv(contacts);
+	}
+	public void readDataFromCsvFile() {
+		new AddressBookIOService().readFromCsv();
+	}
+	
 	public void findContactInCity(String cityName) {
 		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
 			System.out.println(c.getFirstName()+" : "+cityName);
@@ -131,10 +143,9 @@ public class AddressBook {
 		}
 	}
 	
-	public void addContact() {
-		Contact contact = createContact(scanner);
+	public void addContact(Contact contact) {
 		if(!checkIfContactExists(contact)) {
-			contacts.add(createContact(scanner));
+			contacts.add(contact);
 		}
 		else {
 			System.out.println("Duplicate");
@@ -151,7 +162,7 @@ public class AddressBook {
 		
 	}
 	
-	private Contact createContact(Scanner scanner) {
+	public void createContact(Scanner scanner) {
 		System.out.println("Enter contact details");
 		System.out.println("Enter first name");
 		String firstName = scanner.next();
@@ -168,7 +179,8 @@ public class AddressBook {
 		System.out.println("Enter email");
 		String email = scanner.next();
 		Contact contact = new Contact(firstName, lastName, city, state, zip, phoneNumber, email);
-		return contact;
+		addContact(contact);
+		//return contact;
 	}
 	
 	private boolean checkIfContactExists(Contact contact) {

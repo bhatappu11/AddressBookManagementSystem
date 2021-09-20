@@ -82,8 +82,8 @@ public class Contact implements Comparable<Contact>{
 
 	@Override
 	public String toString() {
-		return "Contact [firstName=" + firstName + ", lastName=" + lastName + ", city=" + city + ", state=" + state
-				+ ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+		return "Contact [FirstName=" + firstName + ", LastName=" + lastName + ", City=" + city + ", State=" + state
+				+ ", Zip=" + zip + ", PhoneNumber=" + phoneNumber + ", Email=" + email + "]";
 	}
 	
 }

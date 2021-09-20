@@ -14,7 +14,7 @@ public class AddressBook {
 	private List<Contact> contacts;
 	private HashMap<String, LinkedList<Contact>> contactsByCity;
 	private HashMap<String, LinkedList<Contact>> contactsByState;
-	Scanner sc = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
 	private int numOfContacts = 0;
 	
 	public AddressBook() {
@@ -86,44 +86,44 @@ public class AddressBook {
 
 	public void editContact() {
 		System.out.println("Enter first name of person you want edit:");
-		String firstName = sc.next();
+		String firstName = scanner.next();
 		Contact contactToChange = contacts.stream().filter(c -> c.getFirstName().equals(firstName)).findFirst().orElse(null);
 		if(contactToChange == null) {
 			System.out.println("contact does not exist");
 			return;
 		}
 		System.out.println("Select the options \t 1.first name \t 2.last name \t 3.city \n 4.state \t 5.zip \t 6.phone number \t 7.email");
-		int option = sc.nextInt();
+		int option = scanner.nextInt();
 		switch(option) {
 		case 1:
 			System.out.println("enter new first name");
-			String newFirstName = sc.next();
+			String newFirstName = scanner.next();
 			contactToChange.setFirstName(newFirstName);
 			break;
 		case 2:
 			System.out.println("Enter new last name");
-			String newLastName=sc.next();
+			String newLastName=scanner.next();
 			contactToChange.setLastName(newLastName);
 			break;
 		case 3:
 			System.out.println("Enter new city");
-			contactToChange.setCity(sc.next());
+			contactToChange.setCity(scanner.next());
 			break;
 		case 4:
 			System.out.println("Enter new state");
-			contactToChange.setState(sc.next());
+			contactToChange.setState(scanner.next());
 			break;
 		case 5:
 			System.out.println("Enter new zip");
-			contactToChange.setZip(sc.next());
+			contactToChange.setZip(scanner.next());
 			break;
 		case 6:
 			System.out.println("Enter new phone number");
-			contactToChange.setPhoneNumber(sc.next());
+			contactToChange.setPhoneNumber(scanner.next());
 			break;
 		case 7:
 			System.out.println("Enter new email");
-			contactToChange.setEmail(sc.next());
+			contactToChange.setEmail(scanner.next());
 			break;
 		default:
 			System.err.println("Invalid Option");
@@ -135,7 +135,7 @@ public class AddressBook {
 	}
 	public void deleteContact() {
 		System.out.println("Enter first name number of person you want to delete:");
-		String firstName = sc.next();
+		String firstName = scanner.next();
 		for(int i=0;i<contacts.size();i++) {
 			if(contacts.get(i).getFirstName().equals(firstName)) {
 				contacts.remove(i);
@@ -146,38 +146,43 @@ public class AddressBook {
 	}
 	
 	public void addContact() {
-		System.out.println("Enter contact details");
-		System.out.println("Enter first name");
-		String firstName = sc.next();
-		System.out.println("Enter last name");
-		String lastName = sc.next();
-		System.out.println("Enter city");
-		String city = sc.next();
-		System.out.println("Enter state");
-		String state = sc.next();
-		System.out.println("Enter zip");
-		String zip = sc.next();
-		System.out.println("Enter phone number");
-		String phoneNumber = sc.next();
-		System.out.println("Enter email");
-		String email = sc.next();
-		Contact contact = new Contact(firstName, lastName, city, state, zip, phoneNumber, email);
+		Contact contact = createContact(scanner);
 		if(!checkIfContactExists(contact)) {
-			contacts.add(contact);
+			contacts.add(createContact(scanner));
 		}
 		else {
 			System.out.println("Duplicate");
 		}
-		if(contactsByCity.get(city)==null) {
-			contactsByCity.put(city, new LinkedList<>());
+		if(contactsByCity.get(contact.getCity())==null) {
+			contactsByCity.put(contact.getCity(), new LinkedList<>());
 		}
-		contactsByCity.get(city).add(contact);
+		contactsByCity.get(contact.getCity()).add(contact);
 		
-		if(contactsByState.get(state)==null) {
-			contactsByState.put(state, new LinkedList<>());
+		if(contactsByState.get(contact.getState())==null) {
+			contactsByState.put(contact.getState(), new LinkedList<>());
 		}
-		contactsByState.get(state).add(contact);
+		contactsByState.get(contact.getState()).add(contact);
 		
+	}
+	
+	private Contact createContact(Scanner scanner) {
+		System.out.println("Enter contact details");
+		System.out.println("Enter first name");
+		String firstName = scanner.next();
+		System.out.println("Enter last name");
+		String lastName = scanner.next();
+		System.out.println("Enter city");
+		String city = scanner.next();
+		System.out.println("Enter state");
+		String state = scanner.next();
+		System.out.println("Enter zip");
+		String zip = scanner.next();
+		System.out.println("Enter phone number");
+		String phoneNumber = scanner.next();
+		System.out.println("Enter email");
+		String email = scanner.next();
+		Contact contact = new Contact(firstName, lastName, city, state, zip, phoneNumber, email);
+		return contact;
 	}
 	
 	private boolean checkIfContactExists(Contact contact) {

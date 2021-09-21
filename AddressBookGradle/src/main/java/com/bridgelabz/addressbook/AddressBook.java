@@ -48,6 +48,15 @@ public class AddressBook {
 		new AddressBookIOService().readFromCsv();
 	}
 	
+	public void writeDataToJsonFile(IOService jsonIo) {
+		new AddressBookIOService().writeDataToJson(contacts);
+		
+	}
+	public void readDataFromJsonFile() {
+		new AddressBookIOService().readDataFromJson();
+		
+	}
+	
 	public void findContactInCity(String cityName) {
 		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
 			System.out.println(c.getFirstName()+" : "+cityName);
@@ -200,6 +209,8 @@ public class AddressBook {
 	public String toString() {
 		return "AddressBook [contacts=" + contacts + "]";
 	}
+	
+	
 
 	
 }

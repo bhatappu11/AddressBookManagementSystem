@@ -1,21 +1,30 @@
 package com.bridgelabz.addressbook;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 
 public class AddressBookIOService {
-public static String ADDRESSBOOK_FILE_NAME = "AddressBook-file.txt";
-public static String ADDRESSBOOK_CSV_FILE_NAME = "AddressBook-CSV.csv";
+public static final String ADDRESSBOOK_FILE_NAME = "AddressBook-file.txt";
+public static final String ADDRESSBOOK_CSV_FILE_NAME = "AddressBook-CSV.csv";
+private static final String ADDRESSBOOK_JSON_FILE_NAME = "./AddressBook-Json.json";
+
 	
 	public void writeData(List<Contact> contacts) {
 		StringBuffer addressBuffer = new StringBuffer();
@@ -92,11 +101,48 @@ public static String ADDRESSBOOK_CSV_FILE_NAME = "AddressBook-CSV.csv";
 	        		System.out.println("Zip: "+record[4]);
 	        		System.out.println("Phone number: "+record[5]);
 	        		System.out.println("Email: "+record[6]);
+	        		System.out.println("============================");
 	        	}
 	        	
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
+	public void readDataFromJson() {
+	Gson gson = new Gson();
+	List<Contact> contactList = new ArrayList<Contact>();
+	BufferedReader bufferObject;
+	try {
+		bufferObject = new BufferedReader(new FileReader(ADDRESSBOOK_JSON_FILE_NAME));
+		Contact[] addressBookData = gson.fromJson(bufferObject, Contact[].class);
+		contactList = Arrays.asList(addressBookData);
+		for(Contact contact : contactList) {
+			System.out.println("First name: "+contact.getFirstName());
+			System.out.println("Last name: "+contact.getLastName());
+			System.out.println("City: "+contact.getCity());
+			System.out.println("State: "+contact.getState());
+			System.out.println(("Zip: "+contact.getZip()));
+			System.out.println(("Phone number: "+contact.getPhoneNumber()));
+			System.out.println(("Email: "+contact.getEmail()));
+			System.out.println("=========================");
+		}
+	}catch(IOException e) {
+		e.printStackTrace();
+	}
+	}
+	
+	public void writeDataToJson(List<Contact> contacts) {
+		Gson gson=new Gson();
+		String json=gson.toJson(contacts);
+		FileWriter writer;
+		try {
+			writer = new FileWriter(ADDRESSBOOK_JSON_FILE_NAME);
+			writer.write(json);	
+			writer.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }

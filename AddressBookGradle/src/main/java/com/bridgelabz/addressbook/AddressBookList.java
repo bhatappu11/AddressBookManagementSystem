@@ -1,16 +1,18 @@
 package com.bridgelabz.addressbook;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBookList {
 	public enum IOService {
-		CONSOLE_IO, FILE_IO, JSON_IO
+		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO
 	}
-	private static HashMap<String, AddressBook> addressBooks;
+	public static HashMap<String, AddressBook> addressBooks;
 	public AddressBookList() {
 		this.addressBooks = new HashMap<>();
 	}
+
 	public void add(String name, AddressBook addressBook) {
 		addressBooks.put(name,addressBook);
 		
@@ -70,19 +72,19 @@ public class AddressBookList {
 				else if(choice==2)
 					addressBook.writeDataToFile(IOService.FILE_IO);
 				else if(choice==3)
-					addressBook.writeDataToCsvFile(IOService.FILE_IO);
+					addressBook.writeDataToFile(IOService.CSV_IO);
 				else 
-					addressBook.writeDataToJsonFile(IOService.JSON_IO);
+					addressBook.writeDataToFile(IOService.JSON_IO);
 				break;
 			case 5:
 				System.out.println("Enter 1.from text file 2.from csv file 3.from json file");
 				int opt=sc.nextInt();
 				if(opt==1)
-					addressBook.readDataFromFile();
+					addressBook.readDataFromFile(IOService.FILE_IO);
 				else if(opt==2)
-					addressBook.readDataFromCsvFile();
+					addressBook.readDataFromFile(IOService.CSV_IO);
 				else
-					addressBook.readDataFromJsonFile();
+					addressBook.readDataFromFile(IOService.JSON_IO);
 				break;
 			default:
 				exit = false;
@@ -111,4 +113,7 @@ public class AddressBookList {
 			addressBook.sortByName();
 		}
 	}
+
+	
+	
 }

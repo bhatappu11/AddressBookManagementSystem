@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class AddressBook {
+public class AddressBook implements AddressBookIF {
 	private List<Contact> contacts;
 	private HashMap<String, LinkedList<Contact>> contactsByCity;
 	private HashMap<String, LinkedList<Contact>> contactsByState;
@@ -26,37 +26,32 @@ public class AddressBook {
 		this.numOfContacts = 0;
 	}
 	public void writeDataToFile(IOService ioService) {
-		if(ioService.equals(IOService.CONSOLE_IO))
-			System.out.println("\nWriting  AddressBook to  Console\n" + contacts);
-		
-		else if(ioService.equals(IOService.FILE_IO))
-			new AddressBookIOService().writeData(contacts);
+		switch(ioService) {
+		case CONSOLE_IO:
+			System.out.println("\nWriting  AddressBook to  Console\n" + contacts); break;
+		case FILE_IO:
+			new AddressBookIOService().writeData(contacts,ioService); break;
+		case CSV_IO:
+			new AddressBookIOService().writeData(contacts,ioService); break;
+		case JSON_IO:
+			new AddressBookIOService().writeData(contacts,ioService); break;
+		default:
+			System.out.println("Invalid request");
+		}
 	}
-	
-	public void readDataFromFile() {
-		new AddressBookIOService().printData();
-	}
-	
-	public void writeDataToCsvFile(IOService ioService) {
-		if(ioService.equals(IOService.CONSOLE_IO))
-			System.out.println("\nWriting  AddressBook to  Console\n" + contacts);
-		
-		else if(ioService.equals(IOService.FILE_IO))
-			new AddressBookIOService().writeDataToCsv(contacts);
-	}
-	public void readDataFromCsvFile() {
-		new AddressBookIOService().readFromCsv();
-	}
-	
-	public void writeDataToJsonFile(IOService jsonIo) {
-		new AddressBookIOService().writeDataToJson(contacts);
-		
-	}
-	public void readDataFromJsonFile() {
-		new AddressBookIOService().readDataFromJson();
+	public void readDataFromFile(IOService fileIo) {
+		switch(fileIo) {
+		case FILE_IO:
+			new AddressBookIOService().printData(fileIo); break;
+		case CSV_IO:
+			new AddressBookIOService().printData(fileIo); break;
+		case JSON_IO:
+			new AddressBookIOService().printData(fileIo); break;
+		default:
+			System.out.println("Invalid request");
+		}
 		
 	}
-	
 	public void findContactInCity(String cityName) {
 		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
 			System.out.println(c.getFirstName()+" : "+cityName);
@@ -189,10 +184,9 @@ public class AddressBook {
 		String email = scanner.next();
 		Contact contact = new Contact(firstName, lastName, city, state, zip, phoneNumber, email);
 		addContact(contact);
-		//return contact;
 	}
 	
-	private boolean checkIfContactExists(Contact contact) {
+	public boolean checkIfContactExists(Contact contact) {
 		return contacts.stream().filter(c -> c.getFirstName().equals(contact.getFirstName())).findFirst().orElse(null) != null;
 	}
 	public void printCountByCity() {
@@ -209,8 +203,4 @@ public class AddressBook {
 	public String toString() {
 		return "AddressBook [contacts=" + contacts + "]";
 	}
-	
-	
-
-	
 }

@@ -3,6 +3,7 @@ package com.bridgelabz.addressbook;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.bridgelabz.addressbook.AddressBookList.IOService;
@@ -53,21 +54,17 @@ public class AddressBook implements AddressBookIF {
 		
 	}
 	public void findContactInCity(String cityName) {
-		contacts.stream().filter(c -> c.getCity().equals(cityName)).peek(c -> {
-			System.out.println(c.getFirstName()+" : "+cityName);
-		});
+		Predicate<Contact> searchPerson = (contacts -> contacts.getCity().equals(cityName));
+		contacts.stream().filter(searchPerson).forEach(System.out::println);
 	}
 	public void findContactInState(String stateName) {
-		contacts.stream().filter(c -> c.getState().equals(stateName)).peek(c -> {
-			System.out.println(c.getFirstName()+" : "+stateName);
-		});
+		Predicate<Contact> searchPerson = (contacts -> contacts.getCity().equals(stateName));
+		contacts.stream().filter(searchPerson).forEach(System.out::println);
 	}
 	public void sortByName() {
 		contacts.stream()
 		 .sorted((contact1,contact2) -> contact1.getFirstName().compareTo(contact2.getFirstName()))
-		 .forEach(n->{
-				System.out.println(n.getFirstName());
-			});
+		 .forEach(System.out::println);
 	}
 	public  void sortByZip() {
 		contacts.stream()
@@ -190,12 +187,12 @@ public class AddressBook implements AddressBookIF {
 		return contacts.stream().filter(c -> c.getFirstName().equals(contact.getFirstName())).findFirst().orElse(null) != null;
 	}
 	public void printCountByCity() {
-		contactsByCity.keySet().stream().peek(c -> {
+		contactsByCity.keySet().stream().forEach(c -> {
 			System.out.println(c+" : "+contactsByCity.get(c).stream().count());
 		});		
 	}
 	public void printCountByState() {
-		contactsByState.keySet().stream().peek(s -> {
+		contactsByState.keySet().stream().forEach(s -> {
 			System.out.println(s+" : "+contactsByState.get(s).stream().count());
 		});			
 	}

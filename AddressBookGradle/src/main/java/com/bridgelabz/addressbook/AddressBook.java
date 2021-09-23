@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class AddressBook implements AddressBookIF {
-	private List<Contact> contacts;
+	public List<Contact> contacts;
 	private HashMap<String, LinkedList<Contact>> contactsByCity;
 	private HashMap<String, LinkedList<Contact>> contactsByState;
 	Scanner scanner = new Scanner(System.in);

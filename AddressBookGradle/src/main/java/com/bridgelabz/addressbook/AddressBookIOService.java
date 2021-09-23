@@ -25,7 +25,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class AddressBookIOService {
 public static final String ADDRESSBOOK_FILE_NAME = "AddressBook-file.txt";
 public static final String ADDRESSBOOK_CSV_FILE_NAME = "AddressBook-CSV.csv";
-private static final String ADDRESSBOOK_JSON_FILE_NAME = "./AddressBook-Json.json";
+public static final String ADDRESSBOOK_JSON_FILE_NAME = "./AddressBook-Json.json";
 
 	
 	public void writeData(List<Contact> contacts, IOService ioService) {

@@ -110,5 +110,11 @@ public class AddressBookTest {
 		book1.readDataFromFile(IOService.JSON_IO);
 		Assert.assertTrue(true);
 	}
+	@Test
+	public void givenContactInDB_WhenRetrieved_ShouldMatchContactCount(){
+		AddressBookList addressBookService = new AddressBookList();
+		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
+		Assert.assertEquals(6, contactList.size());
+	}
 	
 }

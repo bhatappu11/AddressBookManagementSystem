@@ -2,11 +2,13 @@ package com.bridgelabz.addressbook;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+
 
 public class AddressBookList {
 	public enum IOService {
-		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO
+		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
 	}
 	public static HashMap<String, AddressBook> addressBooks;
 	public AddressBookList() {
@@ -112,6 +114,11 @@ public class AddressBookList {
 		for(AddressBook addressBook : addressBooks.values()) {
 			addressBook.sortByName();
 		}
+	}
+
+	public List<Contact> readContact(IOService dbIo) {
+		List<Contact> list = new AddressBookDBService().readData();
+		return list;
 	}
 
 	

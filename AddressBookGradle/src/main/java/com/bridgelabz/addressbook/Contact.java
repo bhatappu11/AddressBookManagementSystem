@@ -8,6 +8,8 @@ public class Contact implements Comparable<Contact>{
 	private String zip;
 	private String phoneNumber;
 	private String email;
+	private String id;
+	private String bookID;
 	
 	public Contact(String firstName, String lastName, String city, String state, String zip, String phoneNumber,
 			String email) {
@@ -18,6 +20,15 @@ public class Contact implements Comparable<Contact>{
 		this.zip = zip;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+	}
+
+	public Contact(String id, String firstName2, String lastName2, String phoneNumber2, String email2, String bookID) {
+		this.id = id;
+		this.firstName = firstName2;
+		this.lastName = lastName2;
+		this.phoneNumber = phoneNumber2;
+		this.email = email2;
+		this.bookID = bookID;
 	}
 
 	public String getFirstName() {

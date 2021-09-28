@@ -45,4 +45,17 @@ public class AddressBookDBService {
 		return connection;
 	}
 
+
+	public void writeData(Contact contact) {
+		String sql = String.format("insert into contact(id,first_name,last_name,phone,email,book_id) values ('%s','%s','%s','%s','%s','%s')",
+				contact.getId(),contact.getFirstName(),contact.getLastName(),contact.getPhoneNumber(),contact.getEmail(),contact.getBookID());
+		try(Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

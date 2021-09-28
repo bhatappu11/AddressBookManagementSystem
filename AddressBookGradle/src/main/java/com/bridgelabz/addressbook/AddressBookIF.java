@@ -2,7 +2,7 @@ package com.bridgelabz.addressbook;
 
 import java.util.Scanner;
 
-import com.bridgelabz.addressbook.AddressBookList.IOService;
+import com.bridgelabz.addressbook.AddressBookService.IOService;
 
 public interface AddressBookIF {
 	public void writeDataToFile(IOService ioService);

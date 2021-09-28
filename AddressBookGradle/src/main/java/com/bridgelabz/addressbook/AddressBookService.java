@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class AddressBookList {
+public class AddressBookService {
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
 	}
 	public static HashMap<String, AddressBook> addressBooks;
-	public AddressBookList() {
+	public AddressBookService() {
 		this.addressBooks = new HashMap<>();
 	}
 

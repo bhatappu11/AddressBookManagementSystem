@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bridgelabz.addressbook.AddressBookList.IOService;
+import com.bridgelabz.addressbook.AddressBookService.IOService;
 import com.google.gson.Gson;
 
 public class AddressBookTest {
@@ -112,7 +112,7 @@ public class AddressBookTest {
 	}
 	@Test
 	public void givenContactInDB_WhenRetrieved_ShouldMatchContactCount(){
-		AddressBookList addressBookService = new AddressBookList();
+		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
 		Assert.assertEquals(6, contactList.size());
 	}

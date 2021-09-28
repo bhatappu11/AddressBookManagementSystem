@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.bridgelabz.addressbook.AddressBookList.IOService;
+import com.bridgelabz.addressbook.AddressBookService.IOService;
 
 import java.io.IOException;
 import java.nio.file.Files;

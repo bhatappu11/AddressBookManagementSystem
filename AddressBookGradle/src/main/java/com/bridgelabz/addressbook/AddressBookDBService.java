@@ -74,7 +74,7 @@ public class AddressBookDBService {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			throw new AddressBookDBException(AddressBookDBException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
+			throw new AddressBookException(AddressBookException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
 		}
 		return count;
 	}

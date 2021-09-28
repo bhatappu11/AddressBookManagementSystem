@@ -121,6 +121,11 @@ public class AddressBookService {
 		return list;
 	}
 
+	public void writeContact(Contact contact, IOService dbIo) {
+		new AddressBookDBService().writeData(contact);
+		
+	}
+
 	
 	
 }

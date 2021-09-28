@@ -125,5 +125,12 @@ public class AddressBookTest {
 		long updatedSize = addressBookService.readContact(IOService.DB_IO).size();
 		Assert.assertEquals(initialSize+1, updatedSize);
 	}
+	@Test
+	public void givenACity_WhenQueried_ShouldGetNumberOfContacts()
+	{
+		AddressBookService addressBookService = new AddressBookService();
+		int count  = addressBookService.countByCity("Blore", IOService.DB_IO);
+		Assert.assertEquals(2, count);
+	}
 	
 }

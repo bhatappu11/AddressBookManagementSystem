@@ -116,5 +116,14 @@ public class AddressBookTest {
 		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
 		Assert.assertEquals(6, contactList.size());
 	}
+	@Test
+	public void givenAConact_WhenInserted_ShouldGetUpdatedSize(){
+		Contact contact = new Contact("C8", "Jasmine", "Ruby", "7895679067", "jas@gmail.com", "b2");
+		AddressBookService addressBookService = new AddressBookService();
+		long initialSize  = addressBookService.readContact(IOService.DB_IO).size();
+		addressBookService.writeContact(contact,IOService.DB_IO);
+		long updatedSize = addressBookService.readContact(IOService.DB_IO).size();
+		Assert.assertEquals(initialSize+1, updatedSize);
+	}
 	
 }

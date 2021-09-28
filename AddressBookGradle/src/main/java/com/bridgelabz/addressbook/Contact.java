@@ -9,6 +9,22 @@ public class Contact implements Comparable<Contact>{
 	private String phoneNumber;
 	private String email;
 	private String id;
+	public String getId() {
+		return id;
+	}
+
+	public String getBookID() {
+		return bookID;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setBookID(String bookID) {
+		this.bookID = bookID;
+	}
+
 	private String bookID;
 	
 	public Contact(String firstName, String lastName, String city, String state, String zip, String phoneNumber,

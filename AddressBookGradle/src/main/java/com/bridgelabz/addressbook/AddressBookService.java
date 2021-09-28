@@ -126,6 +126,10 @@ public class AddressBookService {
 		
 	}
 
+	public int countByCity(String city, IOService dbIo) {
+		return new AddressBookDBService().countByCity(city);
+	}
+
 	
 	
 }

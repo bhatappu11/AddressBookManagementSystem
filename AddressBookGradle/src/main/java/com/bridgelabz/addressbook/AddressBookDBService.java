@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,8 @@ import java.util.List;
 
 
 public class AddressBookDBService {
+
+	private PreparedStatement addressBookPreparedStatement;
 
 	public List<Contact> readData() {
 		String sql = "select * from contact;";
@@ -56,6 +59,35 @@ public class AddressBookDBService {
 			e.printStackTrace();
 		}
 		
+	}
+	public int countByCity(String city) {
+		int count = 0;
+		if(this.addressBookPreparedStatement == null) {
+			this.prepareStatementForAddressBook();
+		}
+		try {
+			addressBookPreparedStatement.setString(1, "Blore");
+			ResultSet resultSet = addressBookPreparedStatement.executeQuery();
+			while(resultSet.next()) {
+				count++; 
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new AddressBookDBException(AddressBookDBException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
+		}
+		return count;
+	}
+
+	private void prepareStatementForAddressBook() {
+		try {
+			Connection connection = this.getConnection();
+			String sqlStatement = "select * from contact c join address a on c.id=a.id where city = ?;";
+			addressBookPreparedStatement = connection.prepareStatement(sqlStatement);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

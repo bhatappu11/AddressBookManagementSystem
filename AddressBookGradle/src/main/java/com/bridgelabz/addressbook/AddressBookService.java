@@ -11,9 +11,18 @@ public class AddressBookService {
 		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
 	}
 	public static HashMap<String, AddressBook> addressBooks;
+	private List<Contact> contactList;
+	private AddressBookDBService addressBookDBService;
+	
 	public AddressBookService() {
 		this.addressBooks = new HashMap<>();
+		addressBookDBService = AddressBookDBService.getInstance();
 	}
+	public AddressBookService(List<Contact> contactList) {
+		this();
+		this.contactList = contactList;
+	}
+
 
 	public void add(String name, AddressBook addressBook) {
 		addressBooks.put(name,addressBook);
@@ -117,19 +126,31 @@ public class AddressBookService {
 	}
 
 	public List<Contact> readContact(IOService dbIo) {
-		List<Contact> list = new AddressBookDBService().readData();
-		return list;
+		contactList = addressBookDBService.readData();
+		return contactList;
 	}
 
-	public void writeContact(Contact contact, IOService dbIo) {
-		new AddressBookDBService().writeData(contact);
-		
+	public void addContact(String id, String firstName,String lastName, String phone,
+			String email, String bookID, String addressID, String city, String state, String zip, String typeID) {
+		contactList.add(addressBookDBService.addContact(id, firstName, lastName, phone, email, bookID, addressID, city, state, zip, typeID));
+		System.out.println(contactList);
 	}
 
 	public int countByCity(String city, IOService dbIo) {
-		return new AddressBookDBService().countByCity(city);
+		return addressBookDBService.countByCity(city);
 	}
-
+	private Contact getContactData(String name) {
+		return this.contactList.parallelStream()
+				.filter(contactDataItem -> contactDataItem.id.equals(name))
+				.findFirst()
+				.orElse(null);
+	}
+	public boolean checkContactInSyncWithDB(String name) {
+		List<Contact> contactDataList = addressBookDBService.getContactData(name);
+		System.out.println(contactDataList);
+		return contactDataList.get(0).equals(getContactData(name));
+	}
+	
 	
 	
 }

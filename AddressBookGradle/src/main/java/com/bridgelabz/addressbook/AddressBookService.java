@@ -162,6 +162,9 @@ public class AddressBookService {
 	public List<Contact> getContactsInADateRange(LocalDate startDate, LocalDate endDate) {
 			return addressBookDBService.getContactBetweenDateRange(startDate, endDate);	
 	}
+	public int countByState(String state, IOService dbIo) {
+		return addressBookDBService.countByState(state);
+	}
 	
 	
 	

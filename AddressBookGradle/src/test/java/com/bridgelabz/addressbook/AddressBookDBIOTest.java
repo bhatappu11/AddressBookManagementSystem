@@ -41,6 +41,14 @@ public class AddressBookDBIOTest {
 		int count  = addressBookService.countByCity("Blore", IOService.DB_IO);
 		Assert.assertEquals(2, count);
 	}*/
+	@Test
+	public void givenNewPhoneNumberForContact_WhenUpdated_ShouldSyncWithDB() {
+		AddressBookService addressBookService = new AddressBookService();
+		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
+		addressBookService.updateContactPhone("c1","7834560977");
+		boolean result = addressBookService.checkContactInSyncWithDB("c1");
+		Assert.assertTrue(result);
+	}
 	
 	
 }

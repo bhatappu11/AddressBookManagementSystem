@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
 public class AddressBookService {
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
@@ -159,6 +158,9 @@ public class AddressBookService {
 		if(contact != null) contact.phoneNumber = phoneNumber;
 		
 		
+	}
+	public List<Contact> getContactsInADateRange(LocalDate startDate, LocalDate endDate) {
+			return addressBookDBService.getContactBetweenDateRange(startDate, endDate);	
 	}
 	
 	

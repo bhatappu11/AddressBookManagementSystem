@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+
 public class AddressBookService {
 	public enum IOService {
 		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
@@ -149,6 +150,14 @@ public class AddressBookService {
 		List<Contact> contactDataList = addressBookDBService.getContactData(name);
 		System.out.println(contactDataList);
 		return contactDataList.get(0).equals(getContactData(name));
+	}
+	public void updateContactPhone(String id, String phoneNumber) {
+		int result = addressBookDBService.updateContactData(id,phoneNumber);
+		if(result == 0) return;
+		Contact contact = this.getContactData(id);
+		if(contact != null) contact.phoneNumber = phoneNumber;
+		
+		
 	}
 	
 	

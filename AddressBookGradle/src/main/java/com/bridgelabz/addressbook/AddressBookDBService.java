@@ -186,7 +186,6 @@ public class AddressBookDBService {
 			String sql = String.format("INSERT INTO contact (id,first_name,last_name,phone,email,book_id,date_added) VALUES('%s','%s','%s',%s,'%s','%s','%s')",id,firstName,
 					lastName,phone,email,bookID,date.toString());
 			int result = statement.executeUpdate(sql);
-			System.out.println(result);
 		}catch(SQLException e) {
 			try {
 				connection.rollback();

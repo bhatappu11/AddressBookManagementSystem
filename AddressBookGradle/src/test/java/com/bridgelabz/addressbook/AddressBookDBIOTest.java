@@ -50,6 +50,16 @@ public class AddressBookDBIOTest {
 		boolean result = addressBookService.checkContactInSyncWithDB("c1");
 		Assert.assertTrue(result);
 	}
+	@Test
+	public void givenDateRange_WhenQueried_ShouldReturnContactCount(){
+		AddressBookService addressBookService = new AddressBookService();
+		addressBookService.readContact(IOService.DB_IO);
+		LocalDate startDate = LocalDate.of(2018,01,01);
+		LocalDate endDate = LocalDate.now(); 
+		List<Contact> contactList = addressBookService.getContactsInADateRange(startDate,endDate);
+		Assert.assertEquals(5, contactList.size());
+	}
+	
 	
 	
 }

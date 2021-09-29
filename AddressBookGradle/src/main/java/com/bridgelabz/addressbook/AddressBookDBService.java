@@ -20,6 +20,7 @@ public class AddressBookDBService {
 	private PreparedStatement addressBookDataStatement;
 	private PreparedStatement addressBookCountPreparedStatement;
 	private PreparedStatement contactDateStatement;
+	private PreparedStatement addressBookCountStatePreparedStatement;
 	private static AddressBookDBService addressBookDBService;
 	private AddressBookDBService() {
 	}
@@ -328,6 +329,36 @@ public class AddressBookDBService {
 		}
 		
 	}
+
+	public int countByState(String state) {
+		int count = 0;
+		if(this.addressBookCountStatePreparedStatement == null) {
+			this.prepareStatementForCountContact();
+		}
+		try {
+			addressBookCountStatePreparedStatement.setString(1, state);
+			ResultSet resultSet = addressBookCountStatePreparedStatement.executeQuery();
+			while(resultSet.next()) {
+				count++; 
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			throw new AddressBookException(AddressBookException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
+		}
+		return count;
+	}
+	private void prepareStatementForCountContact() {
+		try {
+			Connection connection = this.getConnection();
+			String sqlStatement = "select * from contact c join address a on c.id=a.contact_id where state = ?;";
+			addressBookCountStatePreparedStatement = connection.prepareStatement(sqlStatement);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	
 

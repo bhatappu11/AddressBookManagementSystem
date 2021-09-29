@@ -43,6 +43,13 @@ public class AddressBookDBIOTest {
 		Assert.assertEquals(3, count);
 	}
 	@Test
+	public void givenAState_WhenQueried_ShouldGetNumberOfContacts()
+	{
+		AddressBookService addressBookService = new AddressBookService();
+		int count  = addressBookService.countByState("Karnataka", IOService.DB_IO);
+		Assert.assertEquals(3, count);
+	}
+	@Test
 	public void givenNewPhoneNumberForContact_WhenUpdated_ShouldSyncWithDB() {
 		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);

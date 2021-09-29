@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbook;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -132,8 +133,8 @@ public class AddressBookService {
 	}
 
 	public void addContact(String id, String firstName,String lastName, String phone,
-			String email, String bookID, String addressID, String city, String state, String zip, String typeID) {
-		contactList.add(addressBookDBService.addContact(id, firstName, lastName, phone, email, bookID, addressID, city, state, zip, typeID));
+			String email, String bookID, String addressID, String city, String state, String zip, String typeID, LocalDate date) {
+		contactList.add(addressBookDBService.addContact(id, firstName, lastName, phone, email, bookID, addressID, city, state, zip, typeID,date));
 		System.out.println(contactList);
 	}
 

@@ -14,10 +14,12 @@ import java.util.Map;
 
 import com.bridgelabz.addressbook.AddressBookException.ExceptionType;
 
+
 public class AddressBookDBService {
 
 	private PreparedStatement addressBookDataStatement;
 	private PreparedStatement addressBookCountPreparedStatement;
+	private PreparedStatement contactDateStatement;
 	private static AddressBookDBService addressBookDBService;
 	private AddressBookDBService() {
 	}
@@ -294,6 +296,37 @@ public class AddressBookDBService {
 		} 
 		return 0;
 
+	}
+
+	public List<Contact> getContactBetweenDateRange(LocalDate startDate, LocalDate endDate) {
+		List<Contact> contactList=null;
+		if(this.contactDateStatement==null){
+			this.preparedStatementForContactInDateRange();
+		}
+		try{
+			contactDateStatement.setDate(1,java.sql.Date.valueOf(startDate));
+			contactDateStatement.setDate(2,java.sql.Date.valueOf(endDate));
+
+			ResultSet resultSet= contactDateStatement.executeQuery();
+			contactList=this.getContactData(resultSet);
+
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return contactList;
+
+
+	}
+
+	private void preparedStatementForContactInDateRange() {
+		try{
+			Connection connection = this.getConnection();
+			String sql="SELECT * FROM contact WHERE date_added BETWEEN ? AND ?";
+			contactDateStatement=connection.prepareStatement(sql);
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	

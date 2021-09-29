@@ -34,14 +34,14 @@ public class AddressBookDBIOTest {
 		//List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
 		boolean result=addressBookService.checkContactInSyncWithDB("c20");
 		Assert.assertTrue(result);
-	}/*
+	}
 	@Test
 	public void givenACity_WhenQueried_ShouldGetNumberOfContacts()
 	{
 		AddressBookService addressBookService = new AddressBookService();
-		int count  = addressBookService.countByCity("Blore", IOService.DB_IO);
-		Assert.assertEquals(2, count);
-	}*/
+		int count  = addressBookService.countByCity("Banglore", IOService.DB_IO);
+		Assert.assertEquals(3, count);
+	}
 	@Test
 	public void givenNewPhoneNumberForContact_WhenUpdated_ShouldSyncWithDB() {
 		AddressBookService addressBookService = new AddressBookService();

@@ -155,7 +155,7 @@ public class AddressBookDBService {
 	}
 
 	public Contact addContact(String id, String firstName,String lastName, String phone,
-			String email, String bookID, String addressID, String city, String state, String zip, String typeID) {
+			String email, String bookID, String addressID, String city, String state, String zip, String typeID, LocalDate date) {
 		HashMap<String, AddressBookList> bookMap = getBook();
 		HashMap<String,ArrayList<AddressBookType>> typeList = getAddressBookTypeList();
 		HashMap<String,AddressBookType> type = new HashMap<>();
@@ -180,8 +180,8 @@ public class AddressBookDBService {
 		}
 		
 		try (Statement statement = connection.createStatement()){
-			String sql = String.format("INSERT INTO contact (id,first_name,last_name,phone,email,book_id) VALUES('%s','%s','%s',%s,'%s','%s')",id,firstName,
-					lastName,phone,email,bookID);
+			String sql = String.format("INSERT INTO contact (id,first_name,last_name,phone,email,book_id,date_added) VALUES('%s','%s','%s',%s,'%s','%s','%s')",id,firstName,
+					lastName,phone,email,bookID,date.toString());
 			int result = statement.executeUpdate(sql);
 			System.out.println(result);
 		}catch(SQLException e) {

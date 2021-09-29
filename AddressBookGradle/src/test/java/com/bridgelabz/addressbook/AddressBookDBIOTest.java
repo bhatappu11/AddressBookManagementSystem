@@ -1,14 +1,16 @@
 package com.bridgelabz.addressbook;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.bridgelabz.addressbook.AddressBookService.IOService;
-
 public class AddressBookDBIOTest {
 	public Contact contact1;
 	public Contact contact2;
@@ -64,6 +66,18 @@ public class AddressBookDBIOTest {
 		LocalDate endDate = LocalDate.now(); 
 		List<Contact> contactList = addressBookService.getContactsInADateRange(startDate,endDate);
 		Assert.assertEquals(5, contactList.size());
+	}
+	@Test
+	public void givenContactWithWrongData_WhenInserted_ShouldThrowException() {
+		AddressBookService addressBookService = new AddressBookService();
+		try {
+			addressBookService.addContact("c20","Pooja","lal","8845234567","rit@gmail.com","b8","a9","Banglore","Karnataka","657345","t3",LocalDate.now());
+			ExpectedException exceptionRule = ExpectedException.none();
+			exceptionRule.expect(AddressBookException.class);
+		}
+		catch(AddressBookException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	

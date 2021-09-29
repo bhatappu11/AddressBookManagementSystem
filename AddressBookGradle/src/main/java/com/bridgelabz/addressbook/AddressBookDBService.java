@@ -280,6 +280,22 @@ public class AddressBookDBService {
 		}
 	}
 
+	public int updateContactData(String id, String phoneNumber) {
+			return this.updateContactDataUsingStatement(id,phoneNumber);
+	}
+
+	private int updateContactDataUsingStatement(String id, String phoneNumber) {
+		String sql = String.format("update contact set phone = '%s' where id = '%s';",phoneNumber,id);
+		try(Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			int result = statement.executeUpdate(sql);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} 
+		return 0;
+
+	}
+
 	
 
 }

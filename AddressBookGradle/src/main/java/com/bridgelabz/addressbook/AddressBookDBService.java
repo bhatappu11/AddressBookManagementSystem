@@ -258,7 +258,7 @@ public class AddressBookDBService {
 			this.prepareStatementForAddressBook();
 		}
 		try {
-			addressBookCountPreparedStatement.setString(1, "Blore");
+			addressBookCountPreparedStatement.setString(1, city);
 			ResultSet resultSet = addressBookCountPreparedStatement.executeQuery();
 			while(resultSet.next()) {
 				count++; 
@@ -274,7 +274,7 @@ public class AddressBookDBService {
 	private void prepareStatementForAddressBook() {
 		try {
 			Connection connection = this.getConnection();
-			String sqlStatement = "select * from contact c join address a on c.id=a.id where city = ?;";
+			String sqlStatement = "select * from contact c join address a on c.id=a.contact_id where city = ?;";
 			addressBookCountPreparedStatement = connection.prepareStatement(sqlStatement);
 		}
 		catch(SQLException e) {

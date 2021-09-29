@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbook;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class AddressBookDBIOTest {
 	public void givenAContact_WhenAdded_ShouldSyncWithDB(){
 		AddressBookService addressBookService = new AddressBookService();
 		addressBookService.readContact(IOService.DB_IO);
-		addressBookService.addContact("c20","Pooja","lal","8845234567","rit@gmail.com","b3","a9","Banglore","Karnataka","657345","t3");
+		addressBookService.addContact("c20","Pooja","lal","8845234567","rit@gmail.com","b3","a9","Banglore","Karnataka","657345","t3",LocalDate.now());
 		//List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
 		boolean result=addressBookService.checkContactInSyncWithDB("c20");
 		Assert.assertTrue(result);

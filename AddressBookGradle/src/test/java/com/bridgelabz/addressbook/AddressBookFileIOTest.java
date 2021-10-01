@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bridgelabz.addressbook.AddressBookService.IOService;
+import com.bridgelabz.addressbook.IOService.ioService;
 import com.google.gson.Gson;
 
 public class AddressBookFileIOTest {
@@ -38,7 +38,7 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.FILE_IO);
+		book1.writeDataToFile(ioService.FILE_IO);
 		long size=0;
 		try {
 			size = Files.lines(Paths.get(AddressBookIOService.ADDRESSBOOK_FILE_NAME)).count();
@@ -53,7 +53,7 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.CSV_IO);
+		book1.writeDataToFile(ioService.CSV_IO);
 		long size=0;
 		try {
 			size = Files.lines(Paths.get(AddressBookIOService.ADDRESSBOOK_CSV_FILE_NAME)).count();
@@ -68,7 +68,7 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.JSON_IO);
+		book1.writeDataToFile(ioService.JSON_IO);
 		long size=0;
 		try {
 			Gson gson = new Gson();
@@ -87,8 +87,8 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.CSV_IO);	
-		book1.readDataFromFile(IOService.CSV_IO);
+		book1.writeDataToFile(ioService.CSV_IO);	
+		book1.readDataFromFile(ioService.CSV_IO);
 		Assert.assertTrue(true);
 	}
 	@Test
@@ -96,8 +96,8 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.FILE_IO);	
-		book1.readDataFromFile(IOService.FILE_IO);
+		book1.writeDataToFile(ioService.FILE_IO);	
+		book1.readDataFromFile(ioService.FILE_IO);
 		Assert.assertTrue(true);
 	}
 	@Test
@@ -105,8 +105,8 @@ public class AddressBookFileIOTest {
 		AddressBook book1 = new AddressBook();
 		book1.addContact(contact1);
 		book1.addContact(contact2);
-		book1.writeDataToFile(IOService.JSON_IO);	
-		book1.readDataFromFile(IOService.JSON_IO);
+		book1.writeDataToFile(ioService.JSON_IO);	
+		book1.readDataFromFile(ioService.JSON_IO);
 		Assert.assertTrue(true);
 	}
 	

@@ -139,28 +139,31 @@ public class AddressBookService {
 	public int countByCity(String city, ioService dbIo) {
 		return addressBookDBService.countByCity(city);
 	}
-	private Contact getContactData(String name) {
+	
+	private Contact getContactData(String id) {
 		return this.contactList.parallelStream()
-				.filter(contactDataItem -> contactDataItem.id.equals(name))
+				.filter(contactDataItem -> contactDataItem.id.equals(id))
 				.findFirst()
 				.orElse(null);
 	}
-	public boolean checkContactInSyncWithDB(String name) {
-		List<Contact> contactDataList = addressBookDBService.getContactData(name);
+	
+	public boolean checkContactInSyncWithDB(String id) {
+		List<Contact> contactDataList = addressBookDBService.getContactData(id);
 		System.out.println(contactDataList);
-		return contactDataList.get(0).equals(getContactData(name));
+		return contactDataList.get(0).equals(getContactData(id));
 	}
+	
 	public void updateContactPhone(String id, String phoneNumber) {
 		int result = addressBookDBService.updateContactData(id,phoneNumber);
 		if(result == 0) return;
 		Contact contact = this.getContactData(id);
-		if(contact != null) contact.phoneNumber = phoneNumber;
-		
-		
+		if(contact != null) contact.phoneNumber = phoneNumber;		
 	}
+	
 	public List<Contact> getContactsInADateRange(LocalDate startDate, LocalDate endDate) {
 			return addressBookDBService.getContactBetweenDateRange(startDate, endDate);	
 	}
+	
 	public int countByState(String state, ioService dbIo) {
 		return addressBookDBService.countByState(state);
 	}

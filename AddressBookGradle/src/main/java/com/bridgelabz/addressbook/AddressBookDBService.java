@@ -70,7 +70,6 @@ public class AddressBookDBService {
 			addressBookDataStatement.setString(1, firstName);
 			ResultSet resultSet = addressBookDataStatement.executeQuery();
 			contactList = this.getContactData(resultSet);
-			//System.out.println(contactList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -195,6 +194,15 @@ public class AddressBookDBService {
 			e.printStackTrace();
 			throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "query execution failed");
 		}
+		try (Statement statement = connection.createStatement()){
+			String sql = String.format("select * from address_book_type where type_id = '%s'",typeID);
+			ResultSet result = statement.executeQuery(sql);
+			if(result.next() == false) {
+				throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "Book with type id :"+typeID+" not present");
+			}
+		}catch(SQLException e) {
+			throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "query execution failed");
+		}
 		
 		try (Statement statement = connection.createStatement()){
 			String sql = String.format("INSERT INTO address(contact_id,address_id,city,state,zip)VALUES('%s','%s','%s','%s','%s')",id
@@ -210,16 +218,6 @@ public class AddressBookDBService {
 			e.printStackTrace();
 			throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "query execution failed");
 		}
-		try (Statement statement = connection.createStatement()){
-			String sql = String.format("select * from address_book_type where type_id = '%s'",typeID);
-			ResultSet result = statement.executeQuery(sql);
-			if(result.next() == false) {
-				throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "Book with type id :"+typeID+" not present");
-			}
-		}catch(SQLException e) {
-			throw new AddressBookException(ExceptionType.CANNOT_EXECUTE_QUERY, "query execution failed");
-		}
-		
 		try(Statement statement = connection.createStatement()){
 			String sql = String.format("INSERT INTO addressbook_booktype(book_id,type_id)VALUES('%s','%s')",
 					bookID,typeID);
@@ -252,6 +250,23 @@ public class AddressBookDBService {
 }
 
 
+	public int updateContactData(String id, String phoneNumber) {
+			return this.updateContactDataUsingStatement(id,phoneNumber);
+	}
+
+	private int updateContactDataUsingStatement(String id, String phoneNumber) {
+		String sql = String.format("update contact set phone = '%s' where id = '%s';",phoneNumber,id);
+		try(Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			int result = statement.executeUpdate(sql);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} 
+		return 0;
+
+	}
+
+
 	public int countByCity(String city) {
 		int count = 0;
 		if(this.addressBookCountPreparedStatement == null) {
@@ -281,21 +296,33 @@ public class AddressBookDBService {
 			e.printStackTrace();
 		}
 	}
-
-	public int updateContactData(String id, String phoneNumber) {
-			return this.updateContactDataUsingStatement(id,phoneNumber);
-	}
-
-	private int updateContactDataUsingStatement(String id, String phoneNumber) {
-		String sql = String.format("update contact set phone = '%s' where id = '%s';",phoneNumber,id);
-		try(Connection connection = this.getConnection()) {
-			Statement statement = connection.createStatement();
-			int result = statement.executeUpdate(sql);
-		}catch(SQLException e) {
+	public int countByState(String state) {
+		int count = 0;
+		if(this.addressBookCountStatePreparedStatement == null) {
+			this.prepareStatementForCountContact();
+		}
+		try {
+			addressBookCountStatePreparedStatement.setString(1, state);
+			ResultSet resultSet = addressBookCountStatePreparedStatement.executeQuery();
+			while(resultSet.next()) {
+				count++; 
+			}
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
-		} 
-		return 0;
-
+			throw new AddressBookException(AddressBookException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
+		}
+		return count;
+	}
+	private void prepareStatementForCountContact() {
+		try {
+			Connection connection = this.getConnection();
+			String sqlStatement = "select * from contact c join address a on c.id=a.contact_id where state = ?;";
+			addressBookCountStatePreparedStatement = connection.prepareStatement(sqlStatement);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Contact> getContactBetweenDateRange(LocalDate startDate, LocalDate endDate) {
@@ -328,37 +355,5 @@ public class AddressBookDBService {
 		}
 		
 	}
-
-	public int countByState(String state) {
-		int count = 0;
-		if(this.addressBookCountStatePreparedStatement == null) {
-			this.prepareStatementForCountContact();
-		}
-		try {
-			addressBookCountStatePreparedStatement.setString(1, state);
-			ResultSet resultSet = addressBookCountStatePreparedStatement.executeQuery();
-			while(resultSet.next()) {
-				count++; 
-			}
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-			throw new AddressBookException(AddressBookException.ExceptionType.CANNOT_EXECUTE_QUERY, "Failed to execute query");
-		}
-		return count;
-	}
-	private void prepareStatementForCountContact() {
-		try {
-			Connection connection = this.getConnection();
-			String sqlStatement = "select * from contact c join address a on c.id=a.contact_id where state = ?;";
-			addressBookCountStatePreparedStatement = connection.prepareStatement(sqlStatement);
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-
-	
 
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.bridgelabz.addressbook.AddressBookService.IOService;
+import com.bridgelabz.addressbook.IOService.ioService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +26,7 @@ public class AddressBook implements AddressBookIF {
 		this.contactsByState = new HashMap<>();
 		this.numOfContacts = 0;
 	}
-	public void writeDataToFile(IOService ioService) {
+	public void writeDataToFile(ioService ioService) {
 		switch(ioService) {
 		case CONSOLE_IO:
 			System.out.println("\nWriting  AddressBook to  Console\n" + contacts); break;
@@ -40,7 +40,7 @@ public class AddressBook implements AddressBookIF {
 			System.out.println("Invalid request");
 		}
 	}
-	public void readDataFromFile(IOService fileIo) {
+	public void readDataFromFile(ioService fileIo) {
 		switch(fileIo) {
 		case FILE_IO:
 			new AddressBookIOService().printData(fileIo); break;

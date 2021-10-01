@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import com.bridgelabz.addressbook.IOService.ioService;
+
 
 public class AddressBookService {
-	public enum IOService {
-		CONSOLE_IO, FILE_IO, JSON_IO, CSV_IO, DB_IO
-	}
 	public static HashMap<String, AddressBook> addressBooks;
 	private List<Contact> contactList;
 	private AddressBookDBService addressBookDBService;
@@ -80,23 +79,23 @@ public class AddressBookService {
 				System.out.println("Enter \n1.To console\n2.To text file 3.To CSV file 4.To json file");
 				int choice = sc.nextInt();
 				if(choice==1)
-					addressBook.writeDataToFile(IOService.CONSOLE_IO);
+					addressBook.writeDataToFile(ioService.CONSOLE_IO);
 				else if(choice==2)
-					addressBook.writeDataToFile(IOService.FILE_IO);
+					addressBook.writeDataToFile(ioService.FILE_IO);
 				else if(choice==3)
-					addressBook.writeDataToFile(IOService.CSV_IO);
+					addressBook.writeDataToFile(ioService.CSV_IO);
 				else 
-					addressBook.writeDataToFile(IOService.JSON_IO);
+					addressBook.writeDataToFile(ioService.JSON_IO);
 				break;
 			case 5:
 				System.out.println("Enter 1.from text file 2.from csv file 3.from json file");
 				int opt=sc.nextInt();
 				if(opt==1)
-					addressBook.readDataFromFile(IOService.FILE_IO);
+					addressBook.readDataFromFile(ioService.FILE_IO);
 				else if(opt==2)
-					addressBook.readDataFromFile(IOService.CSV_IO);
+					addressBook.readDataFromFile(ioService.CSV_IO);
 				else
-					addressBook.readDataFromFile(IOService.JSON_IO);
+					addressBook.readDataFromFile(ioService.JSON_IO);
 				break;
 			default:
 				exit = false;
@@ -126,7 +125,7 @@ public class AddressBookService {
 		}
 	}
 
-	public List<Contact> readContact(IOService dbIo) {
+	public List<Contact> readContact(ioService dbIo) {
 		contactList = addressBookDBService.readData();
 		return contactList;
 	}
@@ -137,7 +136,7 @@ public class AddressBookService {
 		System.out.println(contactList);
 	}
 
-	public int countByCity(String city, IOService dbIo) {
+	public int countByCity(String city, ioService dbIo) {
 		return addressBookDBService.countByCity(city);
 	}
 	private Contact getContactData(String name) {
@@ -162,7 +161,7 @@ public class AddressBookService {
 	public List<Contact> getContactsInADateRange(LocalDate startDate, LocalDate endDate) {
 			return addressBookDBService.getContactBetweenDateRange(startDate, endDate);	
 	}
-	public int countByState(String state, IOService dbIo) {
+	public int countByState(String state, ioService dbIo) {
 		return addressBookDBService.countByState(state);
 	}
 	

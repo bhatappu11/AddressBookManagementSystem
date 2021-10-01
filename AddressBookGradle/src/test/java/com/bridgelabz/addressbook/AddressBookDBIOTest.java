@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.bridgelabz.addressbook.AddressBookService.IOService;
+import com.bridgelabz.addressbook.IOService.ioService;
 public class AddressBookDBIOTest {
 	public Contact contact1;
 	public Contact contact2;
@@ -24,14 +24,14 @@ public class AddressBookDBIOTest {
 	@Test
 	public void givenContactInDB_WhenRetrieved_ShouldMatchContactCount(){
 		AddressBookService addressBookService = new AddressBookService();
-		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
+		List<Contact> contactList = addressBookService.readContact(ioService.DB_IO);
 		System.out.println(contactList);
 		Assert.assertEquals(2, contactList.size());
 	}
 	@Test
 	public void givenAContact_WhenAdded_ShouldSyncWithDB(){
 		AddressBookService addressBookService = new AddressBookService();
-		addressBookService.readContact(IOService.DB_IO);
+		addressBookService.readContact(ioService.DB_IO);
 		addressBookService.addContact("c20","Pooja","lal","8845234567","rit@gmail.com","b3","a9","Banglore","Karnataka","657345","t3",LocalDate.now());
 		boolean result=addressBookService.checkContactInSyncWithDB("c20");
 		Assert.assertTrue(result);
@@ -40,20 +40,20 @@ public class AddressBookDBIOTest {
 	public void givenACity_WhenQueried_ShouldGetNumberOfContacts()
 	{
 		AddressBookService addressBookService = new AddressBookService();
-		int count  = addressBookService.countByCity("Banglore", IOService.DB_IO);
+		int count  = addressBookService.countByCity("Banglore", ioService.DB_IO);
 		Assert.assertEquals(3, count);
 	}
 	@Test
 	public void givenAState_WhenQueried_ShouldGetNumberOfContacts()
 	{
 		AddressBookService addressBookService = new AddressBookService();
-		int count  = addressBookService.countByState("Karnataka", IOService.DB_IO);
+		int count  = addressBookService.countByState("Karnataka", ioService.DB_IO);
 		Assert.assertEquals(3, count);
 	}
 	@Test
 	public void givenNewPhoneNumberForContact_WhenUpdated_ShouldSyncWithDB() {
 		AddressBookService addressBookService = new AddressBookService();
-		List<Contact> contactList = addressBookService.readContact(IOService.DB_IO);
+		List<Contact> contactList = addressBookService.readContact(ioService.DB_IO);
 		addressBookService.updateContactPhone("c1","7834560977");
 		boolean result = addressBookService.checkContactInSyncWithDB("c1");
 		Assert.assertTrue(result);
@@ -61,7 +61,7 @@ public class AddressBookDBIOTest {
 	@Test
 	public void givenDateRange_WhenQueried_ShouldReturnContactCount(){
 		AddressBookService addressBookService = new AddressBookService();
-		addressBookService.readContact(IOService.DB_IO);
+		addressBookService.readContact(ioService.DB_IO);
 		LocalDate startDate = LocalDate.of(2018,01,01);
 		LocalDate endDate = LocalDate.now(); 
 		List<Contact> contactList = addressBookService.getContactsInADateRange(startDate,endDate);

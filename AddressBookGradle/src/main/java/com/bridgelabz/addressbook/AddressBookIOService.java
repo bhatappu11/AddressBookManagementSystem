@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.bridgelabz.addressbook.AddressBookService.IOService;
+
+import com.bridgelabz.addressbook.IOService.ioService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opencsv.CSVReader;
@@ -28,7 +29,7 @@ public static final String ADDRESSBOOK_CSV_FILE_NAME = "AddressBook-CSV.csv";
 public static final String ADDRESSBOOK_JSON_FILE_NAME = "./AddressBook-Json.json";
 
 	
-	public void writeData(List<Contact> contacts, IOService ioService) {
+	public void writeData(List<Contact> contacts, ioService ioService) {
 		switch(ioService) {
 		case FILE_IO:
 			StringBuffer addressBuffer = new StringBuffer();
@@ -83,7 +84,7 @@ public static final String ADDRESSBOOK_JSON_FILE_NAME = "./AddressBook-Json.json
 		}
 		
 	}
-	public void printData(IOService fileIo) {
+	public void printData(ioService fileIo) {
 		switch(fileIo) {
 		case FILE_IO:
 			try {

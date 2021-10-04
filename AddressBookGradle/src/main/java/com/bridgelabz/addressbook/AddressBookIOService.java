@@ -186,7 +186,7 @@ public static AddressBookIOService getInstance(){
 		
 	public List<Contact> readData() {
 		String sql = "select * from contact c,address a where c.id=a.contact_id;";
-		HashMap<String, AddressBookList> bookMap = getBook();
+		HashMap<String, AddressBookSystem> bookMap = getBook();
 		List<Contact> contactList = new ArrayList<>();
 		try(Connection connection = this.getConnection()) {
 			Statement statement = connection.createStatement();
@@ -198,8 +198,8 @@ public static AddressBookIOService getInstance(){
 		return contactList;
 		
 	}
-	private HashMap<String, AddressBookList> getBook() {
-		HashMap<String, AddressBookList> bookMap = new HashMap<>();
+	private HashMap<String, AddressBookSystem> getBook() {
+		HashMap<String, AddressBookSystem> bookMap = new HashMap<>();
 		String sql = "select * from address_book";
 		try(Connection connection = this.getConnection()) {
 			Statement statement = connection.createStatement();
@@ -207,7 +207,7 @@ public static AddressBookIOService getInstance(){
 			while(result.next()) {
 				String bookID  = result.getString("book_id");
 				String bookName  = result.getString("book_name");
-				bookMap.put(bookID, new AddressBookList(bookID, bookName));
+				bookMap.put(bookID, new AddressBookSystem(bookID, bookName));
 			}
 		}
 		catch(SQLException e) {
@@ -240,7 +240,7 @@ public static AddressBookIOService getInstance(){
 	}
 	
 	private List<Contact> getContactData(ResultSet result) {
-		HashMap<String, AddressBookList> bookMap = getBook();
+		HashMap<String, AddressBookSystem> bookMap = getBook();
 		List<Contact> contactList = new ArrayList<>();
 		try{
 			while(result.next()) {
@@ -311,7 +311,7 @@ public static AddressBookIOService getInstance(){
 
 	public Contact addContact(String id, String firstName,String lastName, String phone,
 			String email, String bookID, String addressID, String city, String state, String zip, String typeID, LocalDate date) {
-		HashMap<String, AddressBookList> bookMap = getBook();
+		HashMap<String, AddressBookSystem> bookMap = getBook();
 		HashMap<String,ArrayList<AddressBookType>> typeList = getAddressBookTypeList();
 		HashMap<String,AddressBookType> type = new HashMap<>();
 		

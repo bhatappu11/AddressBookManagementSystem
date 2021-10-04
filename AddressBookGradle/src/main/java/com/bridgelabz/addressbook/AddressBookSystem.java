@@ -1,11 +1,11 @@
 package com.bridgelabz.addressbook;
 
-public class AddressBookList {
+public class AddressBookSystem {
 	public String bookID;
 	public String bookName;
 	
 	
-	public AddressBookList(String bookID, String bookName) {
+	public AddressBookSystem(String bookID, String bookName) {
 		this.bookID = bookID;
 		this.bookName = bookName;
 	}

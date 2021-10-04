@@ -9,12 +9,12 @@ public class Contact implements Comparable<Contact>{
 	public String phoneNumber;
 	public String email;
 	public String id;
-	public AddressBookList bookID;
+	public AddressBookSystem bookID;
 	public String getId() {
 		return id;
 	}
 
-	public AddressBookList getBookID() {
+	public AddressBookSystem getBookID() {
 		return bookID;
 	}
 
@@ -22,7 +22,7 @@ public class Contact implements Comparable<Contact>{
 		this.id = id;
 	}
 
-	public void setBookID(AddressBookList bookID) {
+	public void setBookID(AddressBookSystem bookID) {
 		this.bookID = bookID;
 	}
 
@@ -39,7 +39,7 @@ public class Contact implements Comparable<Contact>{
 		this.email = email;
 	}
 
-	public Contact(String id, String firstName2, String lastName2, String phoneNumber2, String email2, AddressBookList addressBookList) {
+	public Contact(String id, String firstName2, String lastName2, String phoneNumber2, String email2, AddressBookSystem addressBookList) {
 		this.id = id;
 		this.firstName = firstName2;
 		this.lastName = lastName2;

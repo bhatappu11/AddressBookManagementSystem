@@ -9,16 +9,16 @@ import java.util.Scanner;
 import com.bridgelabz.addressbook.IOServiceEnum.ioService;
 
 
-public class AddressBookService {
+public class AddressBookManager {
 	public static HashMap<String, AddressBook> addressBooks;
 	private List<Contact> contactList;
 	private AddressBookIOService addressBookIOService;
 	
-	public AddressBookService() {
+	public AddressBookManager() {
 		this.addressBooks = new HashMap<>();
 		addressBookIOService = AddressBookIOService.getInstance();
 	}
-	public AddressBookService(List<Contact> contactList) {
+	public AddressBookManager(List<Contact> contactList) {
 		this();
 		this.contactList = contactList;
 	}

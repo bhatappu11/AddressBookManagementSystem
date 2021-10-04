@@ -12,11 +12,11 @@ import com.bridgelabz.addressbook.IOService.ioService;
 public class AddressBookService {
 	public static HashMap<String, AddressBook> addressBooks;
 	private List<Contact> contactList;
-	private AddressBookDBService addressBookDBService;
+	private AddressBookIOService addressBookIOService;
 	
 	public AddressBookService() {
 		this.addressBooks = new HashMap<>();
-		addressBookDBService = AddressBookDBService.getInstance();
+		addressBookIOService = AddressBookIOService.getInstance();
 	}
 	public AddressBookService(List<Contact> contactList) {
 		this();
@@ -126,18 +126,18 @@ public class AddressBookService {
 	}
 
 	public List<Contact> readContact(ioService dbIo) {
-		contactList = addressBookDBService.readData();
+		contactList = addressBookIOService.readData();
 		return contactList;
 	}
 
 	public void addContact(String id, String firstName,String lastName, String phone,
 			String email, String bookID, String addressID, String city, String state, String zip, String typeID, LocalDate date) {
-		contactList.add(addressBookDBService.addContact(id, firstName, lastName, phone, email, bookID, addressID, city, state, zip, typeID,date));
+		contactList.add(addressBookIOService.addContact(id, firstName, lastName, phone, email, bookID, addressID, city, state, zip, typeID,date));
 		System.out.println(contactList);
 	}
 
 	public int countByCity(String city, ioService dbIo) {
-		return addressBookDBService.countByCity(city);
+		return addressBookIOService.countByCity(city);
 	}
 	
 	private Contact getContactData(String id) {
@@ -148,26 +148,24 @@ public class AddressBookService {
 	}
 	
 	public boolean checkContactInSyncWithDB(String id) {
-		List<Contact> contactDataList = addressBookDBService.getContactData(id);
+		List<Contact> contactDataList = addressBookIOService.getContactData(id);
 		System.out.println(contactDataList);
 		return contactDataList.get(0).equals(getContactData(id));
 	}
 	
 	public void updateContactPhone(String id, String phoneNumber) {
-		int result = addressBookDBService.updateContactData(id,phoneNumber);
+		int result = addressBookIOService.updateContactData(id,phoneNumber);
 		if(result == 0) return;
 		Contact contact = this.getContactData(id);
 		if(contact != null) contact.phoneNumber = phoneNumber;		
 	}
 	
 	public List<Contact> getContactsInADateRange(LocalDate startDate, LocalDate endDate) {
-			return addressBookDBService.getContactBetweenDateRange(startDate, endDate);	
+			return addressBookIOService.getContactBetweenDateRange(startDate, endDate);	
 	}
 	
 	public int countByState(String state, ioService dbIo) {
-		return addressBookDBService.countByState(state);
+		return addressBookIOService.countByState(state);
 	}
-	
-	
 	
 }

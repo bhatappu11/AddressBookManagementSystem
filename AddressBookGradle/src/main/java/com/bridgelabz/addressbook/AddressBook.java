@@ -1,8 +1,5 @@
 package com.bridgelabz.addressbook;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -19,23 +16,26 @@ public class AddressBook implements AddressBookIF {
 	private HashMap<String, LinkedList<Contact>> contactsByState;
 	Scanner scanner = new Scanner(System.in);
 	private int numOfContacts = 0;
+	private AddressBookIOService addressBookIOService;
 	
 	public AddressBook() {
+		addressBookIOService = AddressBookIOService.getInstance();
 		this.contacts = new LinkedList<Contact>();
 		this.contactsByCity = new HashMap<>();
 		this.contactsByState = new HashMap<>();
 		this.numOfContacts = 0;
 	}
+	
 	public void writeDataToFile(ioService ioService) {
 		switch(ioService) {
 		case CONSOLE_IO:
 			System.out.println("\nWriting  AddressBook to  Console\n" + contacts); break;
 		case FILE_IO:
-			new AddressBookIOService().writeData(contacts,ioService); break;
+			addressBookIOService.writeData(contacts,ioService); break;
 		case CSV_IO:
-			new AddressBookIOService().writeData(contacts,ioService); break;
+			addressBookIOService.writeData(contacts,ioService); break;
 		case JSON_IO:
-			new AddressBookIOService().writeData(contacts,ioService); break;
+			addressBookIOService.writeData(contacts,ioService); break;
 		default:
 			System.out.println("Invalid request");
 		}
@@ -43,11 +43,11 @@ public class AddressBook implements AddressBookIF {
 	public void readDataFromFile(ioService fileIo) {
 		switch(fileIo) {
 		case FILE_IO:
-			new AddressBookIOService().printData(fileIo); break;
+			addressBookIOService.printData(fileIo); break;
 		case CSV_IO:
-			new AddressBookIOService().printData(fileIo); break;
+			addressBookIOService.printData(fileIo); break;
 		case JSON_IO:
-			new AddressBookIOService().printData(fileIo); break;
+			addressBookIOService.printData(fileIo); break;
 		default:
 			System.out.println("Invalid request");
 		}

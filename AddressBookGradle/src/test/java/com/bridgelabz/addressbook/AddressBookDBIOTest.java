@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.bridgelabz.addressbook.IOService.ioService;
+import com.bridgelabz.addressbook.IOServiceEnum.ioService;
 public class AddressBookDBIOTest {
 	public Contact contact1;
 	public Contact contact2;

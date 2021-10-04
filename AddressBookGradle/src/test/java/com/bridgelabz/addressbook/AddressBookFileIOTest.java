@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bridgelabz.addressbook.IOService.ioService;
+import com.bridgelabz.addressbook.IOServiceEnum.ioService;
 import com.google.gson.Gson;
 
 public class AddressBookFileIOTest {

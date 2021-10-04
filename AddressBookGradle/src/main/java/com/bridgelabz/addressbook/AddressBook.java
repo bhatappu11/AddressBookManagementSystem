@@ -3,7 +3,7 @@ package com.bridgelabz.addressbook;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.bridgelabz.addressbook.IOService.ioService;
+import com.bridgelabz.addressbook.IOServiceEnum.ioService;
 
 import java.io.IOException;
 import java.nio.file.Files;
